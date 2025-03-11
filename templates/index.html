@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection</title>
+    <link rel="icon" type="image/x-icon" href="static/images/leaf.ico">
+    <link href="/static/style.css" rel="stylesheet" />
+    <style>
+        .progress-container {
+            display: none;
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .progress-dot {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: #28a745;
+            border-radius: 50%;
+            margin: 0 5px;
+            opacity: 0;
+            animation: blink 1.5s infinite;
+        }
+
+        .progress-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .progress-dot:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .progress-dot:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo"><h1>PLANT <span>DISEASE</span> DETECTION 🌱</h1></div>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
+        </ul>
+    </nav>
+
+    <!-- Container -->
+    <div class="container_h">
+        <h2>Upload An Image</h2>
+        
+        <!-- Form with Progress Dots -->
+        <form action="{{ url_for('upload_image') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
+            <input type="file" name="image" accept=".jpg,.jpeg" required>
+            <button type="submit">Upload</button>
+            
+            <!-- Progress Dots -->
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+            </div>            
+        </form>
+
+        <!-- Flash Message Display -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flash-messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Centered Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Developed & Designed by - Saptarshi Ghosh. All rights reserved.</p>
+    </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const leavesContainer = document.createElement('div');
+    leavesContainer.classList.add('falling-leaves');
+    document.body.appendChild(leavesContainer);  // Append to the body of the page
+
+    function createLeaf() {
+        const leaf = document.createElement('div');
+        leaf.classList.add('falling-leaf');
+
+        // Randomize the size of the leaf between 30px and 60px
+        const randomSize = Math.random() * 30 + 30;
+        leaf.style.width = randomSize + 'px';
+        leaf.style.height = randomSize + 'px';
+
+        // Randomize the starting position across the width of the screen
+        leaf.style.left = Math.random() * 100 + 'vw';
+
+        // Randomize animation duration (between 10s and 15s)
+        const animationDuration = Math.random() * 5 + 10 + 's';
+        const animationDelay = Math.random() * 5 + 's'; // Random delay
+        leaf.style.animationDuration = animationDuration;
+        leaf.style.animationDelay = animationDelay;
+
+        // Randomize speed for each leaf's animation
+        leaf.style.animation = `fall ${animationDuration} linear infinite, sway 6s ease-in-out infinite`;
+
+        leavesContainer.appendChild(leaf);
+
+        // Set a timeout to add a new leaf periodically (every 1-3 seconds)
+        setTimeout(createLeaf, Math.random() * 1000 + 500);
+    }
+
+    // Start creating leaves immediately and continuously
+    createLeaf();
+
+    // Track mouse position and add airflow effect
+    document.addEventListener('mousemove', (event) => {
+        const leaves = document.querySelectorAll('.falling-leaf');
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+
+        leaves.forEach(leaf => {
+            const distanceX = mouseX - leaf.offsetLeft;
+            const distanceY = mouseY - leaf.offsetTop;
+
+            // Set custom CSS variables for airflow effect
+            leaf.style.setProperty('--x-move', `${distanceX / 10}px`);
+            leaf.style.setProperty('--y-move', `${distanceY / 10}px`);
+
+            // Add airflow class for dynamic movement
+            leaf.classList.add('airflow');
+        });
+    });
+});
+
+
+
+        const form = document.getElementById('uploadForm');
+        const progressDots = document.getElementById('progressContainer');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            progressDots.style.display = 'block'; // Show the progress dots
+
+            const formData = new FormData(form);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', form.action, true);
+
+            xhr.upload.addEventListener('progress', function(e) {
+                // You can adjust logic here if needed to simulate different progress states
+            });
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Hide progress dots after upload completes
+                    setTimeout(() => {
+                        progressDots.style.display = 'none';
+
+                        // Parse JSON response to get filename, disease, and disease_info
+                        const response = JSON.parse(xhr.responseText);
+                        const filename = encodeURIComponent(response.filename);
+                        const disease = encodeURIComponent(response.disease);
+                        const disease_info = encodeURIComponent(response.disease_info);
+
+                        // Redirect to the result page with filename, disease, and disease_info as query parameters
+                        window.location.href = `/result/${filename}?disease=${disease}&disease_info=${disease_info}`;
+                    }, 500);
+                } else if (xhr.status === 400) {
+                    // Handle errors by showing a message to the user
+                    alert("Failed to upload. Please ensure the image is a valid plant image and try again.");
+                    progressDots.style.display = 'none';
+                } else {
+                    alert("An unexpected error occurred. Please try again later.");
+                }
+            };
+
+            xhr.onerror = function() {
+                alert("Request failed. Check your network and try again.");
+            };
+
+            xhr.send(formData);
+        });
+    </script>
+</body>
+</html>

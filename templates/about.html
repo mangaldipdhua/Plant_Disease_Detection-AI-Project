@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection - About Us</title>
+    <link rel="icon" type="image/x-icon" href="static/images/leaf.ico">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* For general text (keeping them black) */
+        body,
+        p,
+        ul,
+        ol,
+        li {
+            color: black;
+            font-size: 18px;
+        }
+
+        /* For heading elements, applying green color */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #34db4a;
+            margin-bottom: 10px;
+        }
+
+        .section-box-main {
+            overflow-y: auto;
+            border-radius: 8px;
+            
+            justify-content: center; /* Center horizontally */
+            align-items: center;
+        }
+
+        .section-box {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+            transition: transform 0.3s;
+            background-color: #f9f9f9;
+            flex: 1 1 300px;
+        }
+
+        .section-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        .section-box-l {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+            transition: transform 0.3s;
+            background-color: #f9f9f9;
+            width: 50%;
+            
+            flex: 1 1 300px;
+        }
+
+        .section-box-l:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        .section-box h3 {
+            color: #2da83d;
+            text-align: left;
+            font-size: 30px;
+            font-weight: bold;
+        }
+        .section-box-l h3 {
+            color: #2da83d;
+            text-align: left;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .section-box-main::-webkit-scrollbar {
+            width: 0;
+        }
+
+        .section-box-main {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .team-member {
+            text-align: center;
+            width: 192px;
+            margin-bottom: 20px;
+        }
+
+        .team-member img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid #2da83d;
+            object-fit: cover;
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+        .team-member img:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .team-member p {
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .team-member p.name {
+            font-size: 16px;
+            color: #34db4a;
+            font-weight: bold;
+        }
+
+        .team-member p.designation {
+            font-size: 15px;
+            color: black;
+        }
+
+        .section-box h3 {
+            margin-bottom: 15px;
+        }
+
+        /* Align lists to the left */
+        ul {
+            padding-right: 30px;
+            list-style-type: circle; /* Remove default bullets */
+            text-align: left;
+            padding-left: 15px;
+        }
+
+        /* Custom green dot style */
+        ul li {
+            position: relative;
+            margin-bottom: 10px;
+            
+        }
+
+        ul li::before {
+            content: '•'; /* Green dot */
+            color: #34db4a; /* Green color */
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 15px; /* Adjust the size of the dot */
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <h1>PLANT <span>DISEASE</span> DETECTION🌱</h1>
+        </div>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
+        </ul>
+    </nav>
+
+    <div class="container_a">
+        <h2>About This Project</h2>
+        <div class="section-box-main">
+            <div class="section-box">
+                <h3>Project Overview</h3>
+                <p>This demo project allows users to detect plant diseases by uploading an image. Using a deep learning model, the system predicts diseases, enabling farmers and plant enthusiasts to protect their crops. The website provides a user-friendly interface that guides users through the process, from uploading an image to receiving results with disease information and recommendations.</p>
+            </div>
+
+            <div class="section-box">
+                <h3>Model Details</h3>
+                <p>The model is based on a Convolutional Neural Network (CNN) architecture trained to identify various plant diseases. It achieves an accuracy of approximately 92% and a validation loss of 0.15. The model is optimized for quick predictions without compromising accuracy. It classifies diseases in multiple plant species, delivering precise results in just a few seconds.</p>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/download (2).png') }}" alt="Model Accuracy and Loss Graph">
+                </div>
+            </div>
+
+            <div class="section-box">
+                <h3>Dataset Information</h3>
+                <p>The model is trained on the 'New Plant Diseases Dataset' from Kaggle, which contains over 20,000 images across multiple disease categories and healthy plant samples. The dataset includes images of various crops such as tomatoes, potatoes, and corn, each labeled with disease types like early blight, leaf spot, and powdery mildew. The dataset is curated to cover a wide range of plant species and diseases, ensuring broad applicability. The diversity and size of the dataset help improve the robustness of the model.</p>
+            </div>
+
+            <div class="section-box-l">
+                <h3>Model Features</h3>
+                <ul>
+                    <li>Quick real-time prediction for uploaded images</li>
+                    <li>Support for a wide range of plant species and diseases</li>
+                    <li>High accuracy (around 92%) and low validation loss</li>
+                    <li>Detailed disease information with treatment recommendations</li>
+                    <li>Scalable and optimized for deployment in agricultural systems</li>
+                    <li>User-friendly interface for easy navigation and interaction</li>
+                    <li>Integration capability with IoT devices and mobile apps for field use</li>
+                </ul>
+            </div>
+
+            <div class="section-box-l">
+                <h3>Advantages of the Project</h3>
+                <ul>
+                    <li>Quick identification of diseases</li>
+                    <li>Provides actionable treatment advice</li>
+                    <li>User-friendly interface for ease of use</li>
+                    <li>Potential for early disease detection and prevention</li>
+                    <li>Promotes crop health and agricultural productivity</li>
+                </ul>
+            </div>
+
+            <div class="section-box">
+                <h3>Future Vision</h3>
+                <p>The project aims to expand into real-time field detection through mobile apps and integration with IoT devices. Future updates will include more disease categories, localization for specific regions, and user-customizable disease databases. We plan to integrate machine learning models that can learn from new datasets continuously, ensuring the model stays up to date with emerging diseases and evolving plant health threats.</p>
+            </div>
+
+            <div class="section-box">
+                <h3>Team Members</h3>
+                <div class="team-members">
+                    <div class="team-member">
+                        <img src="/static/images/saptarshi.jpg" alt="Saptarshi Ghosh">
+                        <p class="name">Saptarshi Ghosh</p>
+                        <p class="designation">AI/ML Specialist</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="/static/images/mangal-2.jpg" alt="Mangaldip Dhua">
+                        <p class="name">Mangaldip Dhua</p>
+                        <p class="designation">AI/ML</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="/static/images/IMG-20221003-WA0013.jpg" alt="Arnab Subhra Ghosh">
+                        <p class="name">Arnab Subhra Ghosh</p>
+                        <p class="designation">Data Analyst</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="/static/images/uday.png" alt="Uday Shankar De">
+                        <p class="name">Uday Shankar De</p>
+                        <p class="designation">UI/UX Designer</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="/static/images/Me.jpg" alt="Anubrata Mandal">
+                        <p class="name">Anubrata Mandal</p>
+                        <p class="designation">Backend Developer</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-box">
+                <h3>GitHub Repository</h3>
+                <p>We welcome contributions! Check out our project on GitHub:</p>
+                <a href="https://github.com/eliot-99/Plant-Disease-Detection-Using-CNN-.git" target="_blank" class="back-button-ag">Contribute on GitHub</a>
+            </div>
+        </div>
+        <a href="{{ url_for('index') }}" class="back-button-a">Back to Home</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Developed & Designed by - Saptarshi Ghosh. All rights reserved.</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const leavesContainer = document.createElement('div');
+        leavesContainer.classList.add('falling-leaves');
+        document.body.appendChild(leavesContainer);  // Append to the body of the page
+    
+        function createLeaf() {
+            const leaf = document.createElement('div');
+            leaf.classList.add('falling-leaf');
+    
+            // Randomize the size of the leaf between 30px and 60px
+            const randomSize = Math.random() * 30 + 30;
+            leaf.style.width = randomSize + 'px';
+            leaf.style.height = randomSize + 'px';
+    
+            // Randomize the starting position across the width of the screen
+            leaf.style.left = Math.random() * 100 + 'vw';
+    
+            // Randomize animation duration (between 10s and 15s)
+            const animationDuration = Math.random() * 5 + 10 + 's';
+            const animationDelay = Math.random() * 5 + 's'; // Random delay
+            leaf.style.animationDuration = animationDuration;
+            leaf.style.animationDelay = animationDelay;
+    
+            // Randomize speed for each leaf's animation
+            leaf.style.animation = `fall ${animationDuration} linear infinite, sway 6s ease-in-out infinite`;
+    
+            leavesContainer.appendChild(leaf);
+    
+            // Set a timeout to add a new leaf periodically (every 1-3 seconds)
+            setTimeout(createLeaf, Math.random() * 1000 + 500);
+        }
+    
+        // Start creating leaves immediately and continuously
+        createLeaf();
+    
+        // Track mouse position and add airflow effect
+        document.addEventListener('mousemove', (event) => {
+            const leaves = document.querySelectorAll('.falling-leaf');
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+    
+            leaves.forEach(leaf => {
+                const distanceX = mouseX - leaf.offsetLeft;
+                const distanceY = mouseY - leaf.offsetTop;
+    
+                // Set custom CSS variables for airflow effect
+                leaf.style.setProperty('--x-move', `${distanceX / 10}px`);
+                leaf.style.setProperty('--y-move', `${distanceY / 10}px`);
+    
+                // Add airflow class for dynamic movement
+                leaf.classList.add('airflow');
+            });
+        });
+    });
+    
+        </script>
+</body>
+
+</html>
